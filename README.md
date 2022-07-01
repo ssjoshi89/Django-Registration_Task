@@ -9,7 +9,7 @@
 * Backend
   * Django
 * Database
-  * SQLite3
+  * PostgreSQL
 
 ## Tech Stack Involved
 
