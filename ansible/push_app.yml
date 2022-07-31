@@ -19,5 +19,5 @@
     command: "mv /mnt/IAC /mnt/Django-Registration_Task"
 
   - name: run docker container
-    command: "docker-compose up -d --build"
+    command: chdir=/mnt/Django-Registration_Task/ docker-compose up -d --build
 
