@@ -33,7 +33,7 @@ pipeline {
         stage('Deploying App') {
             steps {
                 dir('ansible') {
-                    sh 'echo "DEBUG = False" >> ../Django-Registration_Task/Django_Registration/settings.py'
+                    sh 'echo "DEBUG = False" >> ../Django_Registration/settings.py'
                     sh 'ansible-playbook -i hosts --private-key $ANSIBLE_KEY push_app.yml'
                 }
                 echo 'Done!'
