@@ -2,48 +2,65 @@
 - name: Install Docker and docker-compose
   hosts: all
   become: yes
+  docker_apt_release_channel: stable
+  docker_apt_arch: amd64
+  docker_apt_repository: "deb [arch={{ docker_apt_arch }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+  docker_apt_gpg_key: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+  docker_compose_version: "1.24.0"
 
   tasks:
-  - name: update cache
-    apt:
-      update_cache: yes
+      - name: Install packages using apt
+        apt:
+          name: 
+              - apt-transport-https
+              - ca-certificates
+              - curl
+              - gnupg2
+              - software-properties-common
+          state: present
+          update_cache: no
 
-  - name: add docker GPG key
-    apt_key:
-      url: https://download.docker.com/linux/ubuntu/gpg
-      state: present
+      - name: Add Docker GPG apt Key
+        apt_key:
+          url: "{{ docker_apt_gpg_key }}"
+          state: present
 
-  - name: add docker repository
-    apt_repository:
-      repo: deb https://download.docker.com/linux/ubuntu focal stable
+      - name: Add Docker Repository
+        apt_repository:
+          repo: "{{ docker_apt_repository }}"
+          state: present
+          update_cache: true
+          
+      - name: Update apt and install docker-ce
+        apt:
+          name: docker-ce
+          state: present
+          update_cache: false
 
-  - name: update apt and install docker-ce
-    apt: update_cache=yes name=docker-ce state=latest
+      - name: Run and enable docker
+        service:
+          name: docker
+          state: started
+          enabled: true
+          
+      - name: Check current docker-compose version
+        command: docker-compose --version
+        register: docker_compose_vsn
+        changed_when: false
+        failed_when: false
+        check_mode: no
 
-  - name: install docker-ce-cli
-    apt: name=docker-ce state=latest
-
-  - name: install containerd.io
-    apt: name=docker-ce state=latest
-
-  - name: check docker successful installation
-    command: "docker --version"
-
-  - name: add user to docker group
-    user:
-      name: "ubuntu"
-      group: "docker"
-      append: yes
-
-  - name: create folder for docker-compose 2.0
-    command: "mkdir -p ~/.docker/cli-plugins/"
-
-  - name: install docker-compose
-    get_url:
-      url: https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64
-      dest: ~/.docker/cli-plugins/docker-compose
-      mode: "u+x,g+x"
-
-  - name: check docker-compose version
-    command: "docker compose --version"
-
+      - set_fact:
+          docker_compose_current_version: "{{ docker_compose_vsn.stdout | regex_search('(\\d+(\\.\\d+)+)') }}"
+        when:
+          - docker_compose_vsn.stdout is defined
+          
+      - name: Install or upgrade docker-compose
+        get_url: 
+          url : "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64"
+          dest: /usr/local/bin/docker-compose
+          mode: 'a+x'
+          force: yes
+        when: >
+          docker_compose_current_version is not defined
+          or docker_compose_current_version is version(docker_compose_version, '<')
