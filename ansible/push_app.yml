@@ -12,6 +12,12 @@
     copy:
       src: ../../IAC
       dest: /mnt
+      
+  - name: add user to docker group
+    user:
+      name: "ubuntu"
+      group: "docker"
+      append: yes
 
   - name: Rename The Directory
     command: "mv /mnt/IAC /mnt/Django-Registration_Task"
