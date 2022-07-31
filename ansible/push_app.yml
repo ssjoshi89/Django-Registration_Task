@@ -19,10 +19,10 @@
     command: "mv /mnt/IAC /mnt/Django-Registration_Task"
     
   - name: Install Extra Packages - Snap Docker
-    command: "sudo snap install -y docker"
+    command: "snap install docker"
         
   - name: Install Extra Packages - Docker Compose
-    command: "sudo apt install -y docker-compose"
+    command: "apt install docker-compose"
   
   - name: run docker container
     command: "docker-compose up -d --build"
