@@ -10,10 +10,10 @@
   - name: copy app to remote server
     copy:
       src: ../../IAC
-      dest: /mnt/
+      dest: /mnt
       owner: ubuntu
-      group: ubuntu
-      mode: 0644
+      group: docker
+      mode: 777
 
   - name: Rename The Directory
     command: "mv /mnt/IAC /mnt/Django-Registration_Task"
