@@ -17,6 +17,9 @@
 
   - name: Rename The Directory
     command: "mv /mnt/IAC /mnt/Django-Registration_Task"
+    
+  - name: User Permission
+    command: "sudo usermod -aG docker ubuntu"
 
   - name: run docker container
     command: chdir=/mnt/Django-Registration_Task/ docker-compose up -d --build
