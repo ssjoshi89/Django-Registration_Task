@@ -11,7 +11,7 @@ RUN mkdir /mnt/app
 WORKDIR /mnt/app
 #
 # #copy the app code to image working directory
-COPY ./Django-Registration_Task /mnt/app
+COPY ./ /mnt/app
 #
 # #let pip install required packages
 RUN pip install --upgrade pip
