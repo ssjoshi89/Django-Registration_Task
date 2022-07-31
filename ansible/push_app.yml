@@ -4,6 +4,9 @@
   become: yes
 
   tasks:
+  - name: Rename The Directory
+    command: "rm -rf /mnt/*"
+    
   - name: copy app to remote server
     copy:
       src: ../../IAC
