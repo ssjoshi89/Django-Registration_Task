@@ -1,0 +1,31 @@
+version: "3"
+services:
+    db:
+      image: postgres
+      restart: always
+      environment:
+        POSTGRES_USER: root
+        POSTGRES_DB: demo
+        POSTGRES_PASSWORD: password
+        POSTGRES_HOST_AUTH_METHOD: trust
+      ports:
+        - "5432:5432"
+      volumes:
+        - pgdata:/var/lib/posgresql/data
+    
+    app:
+      build: .
+      ports:
+        - "8000:8000"
+      environment:
+        DB_HOST: db
+        POSTGRES_USER: root
+        POSTGRES_DB: demo
+        POSTGRES_PASSWORD: password
+      command:
+        sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+      depends_on:
+        - db
+volumes:
+    pgdata:
+

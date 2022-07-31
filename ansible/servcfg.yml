@@ -1,0 +1,49 @@
+---
+- name: Install Docker and docker-compose
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: update cache
+    apt:
+      update_cache: yes
+
+  - name: add docker GPG key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: add docker repository
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu focal stable
+
+  - name: update apt and install docker-ce
+    apt: update_cache=yes name=docker-ce state=latest
+
+  - name: install docker-ce-cli
+    apt: name=docker-ce state=latest
+
+  - name: install containerd.io
+    apt: name=docker-ce state=latest
+
+  - name: check docker successful installation
+    command: "docker --version"
+
+  - name: add user to docker group
+    user:
+      name: "ubuntu"
+      group: "docker"
+      append: yes
+
+  - name: create folder for docker-compose 2.0
+    command: "mkdir -p ~/.docker/cli-plugins/"
+
+  - name: install docker-compose
+    get_url:
+      url: https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64
+      dest: ~/.docker/cli-plugins/docker-compose
+      mode: "u+x,g+x"
+
+  - name: check docker-compose version
+    command: "docker compose --version"
+
