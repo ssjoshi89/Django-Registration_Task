@@ -9,10 +9,9 @@
     
   - name: Install Certificates
     command: "apt install -y ca-certificates curl gnupg lsb-release"
-    
-    
-   - name: add docker GPG key
-      apt_key:
+      
+  - name: add docker GPG key
+     apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
     
