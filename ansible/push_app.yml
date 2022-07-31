@@ -6,12 +6,15 @@
   tasks:
   - name: copy app to remote server
     copy:
-      src: ../Django-Registration_Task
+      src: ../../IAC
       dest: /mnt/
       owner: ubuntu
       group: ubuntu
       mode: 0644
 
+  - name: Rename The Directory
+    command: "mv /mnt/IAC /mnt/Django-Registration_Task"
+  
   - name: create docker image
     command: "docker compose build"
 
