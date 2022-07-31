@@ -2,6 +2,7 @@
 - name: Deploy app on production server
   hosts: all
   become: yes
+  user: root
 
   tasks:
   - name: Rename The Directory
@@ -11,8 +12,8 @@
     copy:
       src: ../../IAC
       dest: /mnt
-      owner: ubuntu
-      group: ubuntu
+      owner: root
+      group: root
       mode: 777
 
   - name: Rename The Directory
