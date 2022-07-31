@@ -12,7 +12,7 @@
       src: ../../IAC
       dest: /mnt
       owner: ubuntu
-      group: docker
+      group: ubuntu
       mode: 777
 
   - name: Rename The Directory
