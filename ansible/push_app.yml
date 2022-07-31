@@ -14,6 +14,12 @@
 
   - name: Rename The Directory
     command: "mv /mnt/IAC /mnt/Django-Registration_Task"
+    
+  - name: Install Extra Packages - Snap Docker
+    command: "sudo snap install -y docker"
+        
+  - name: Install Extra Packages - Docker Compose
+    command: "sudo apt install -y docker-compose"
   
   - name: run docker container
     command: "docker-compose up -d --build"
