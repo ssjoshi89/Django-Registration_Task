@@ -12,9 +12,6 @@
     copy:
       src: ../../IAC
       dest: /mnt
-      owner: root
-      group: root
-      mode: 777
 
   - name: Rename The Directory
     command: "mv /mnt/IAC /mnt/Django-Registration_Task"
