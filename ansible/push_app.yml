@@ -15,9 +15,6 @@
   - name: Rename The Directory
     command: "mv /mnt/IAC /mnt/Django-Registration_Task"
   
-  - name: create docker image
-    command: "docker compose build"
-
   - name: run docker container
-    command: "docker compose up -d"
+    command: "docker-compose up -d --build"
 
