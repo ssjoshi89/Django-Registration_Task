@@ -27,4 +27,7 @@
 
   - name: run docker container
     command: chdir=/mnt/Django-Registration_Task/ docker-compose up --build
+    
+  - name: run docker container
+    command: chdir=/mnt/Django-Registration_Task/ docker-compose up --build
 
