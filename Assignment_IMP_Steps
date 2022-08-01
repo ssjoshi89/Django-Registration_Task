@@ -1,0 +1,6 @@
+1. Create a Service Role in AWS IAM Service with Administrative Access Policy.
+2. Assign This role to EC2 Instance which running a Jenkins Server. (For Terraform Purpose)
+3. Keep provided .pem file in location /mnt (For ansible ssh purpose)
+4. The Assignment is available on 
+   https://github.com/ssjoshi89/Django-Registration_Task/tree/master
+
