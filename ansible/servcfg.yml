@@ -12,5 +12,13 @@
       group: ubuntu
       mode: 777
       
+  - name: copy app files to remote server
+    copy:
+      src: start_service.sh
+      dest: /mnt
+      owner: ubuntu
+      group: ubuntu
+      mode: 777
+      
   - name: Run the Script
     command: "sh /mnt/script.sh"
