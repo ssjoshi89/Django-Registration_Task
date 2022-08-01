@@ -25,9 +25,5 @@
   - name: User Permission
     command: "sudo usermod -aG docker ubuntu"
 
-  - name: run docker container
-    command: chdir=/mnt/Django-Registration_Task/ docker-compose up --build
-    
-  - name: run docker container
-    command: chdir=/mnt/Django-Registration_Task/ docker-compose up --build
-
+  - name: Run the Script
+    command: "sh /mnt/start_service.sh"
